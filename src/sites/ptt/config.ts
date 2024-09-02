@@ -1,4 +1,4 @@
-import Config from "../../config"
+import type { Config } from "../../types/config"
 
 const config: Config = {
   name: "PTT",

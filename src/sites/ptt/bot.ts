@@ -3,7 +3,7 @@ import sleep from "sleep-promise"
 import Terminal from "terminal.js"
 
 import { Line } from "../../common/Line"
-import Config from "../../config"
+import type { Config } from "../../types/config"
 import Socket from "../../socket"
 import { decode, encode, keymap as key } from "../../utils"
 import { getWidth, indexOfWidth, substrWidth } from "../../utils/char"

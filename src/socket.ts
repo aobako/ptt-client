@@ -1,5 +1,5 @@
 import EventEmitter from "eventemitter3"
-import Config from "./config"
+import type { Config } from "./types/config"
 
 class Socket extends EventEmitter {
   private _config: Config
