@@ -1,7 +1,7 @@
-import { Line } from "../../../common/Line"
-import { SelectQueryBuilder } from "../../../utils/query-builder/SelectQueryBuilder"
-import { keymap as key } from "../../../utils"
-import { substrWidth } from "../../../utils/char"
+import { Line } from "../common/Line"
+import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
+import { keymap as key } from "../utils"
+import { substrWidth } from "../utils/char"
 
 export class Board {
   name = ""

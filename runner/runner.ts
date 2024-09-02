@@ -1,6 +1,5 @@
 import "dotenv/config"
-import { PTT } from "../src/index"
-import { Article } from "../src/sites/ptt/model"
+import { PTT, Article } from "../src/index"
 import WebSocket from "ws"
 
 const TEST_AC = process.env.TEST_AC
