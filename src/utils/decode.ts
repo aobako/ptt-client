@@ -1,4 +1,4 @@
-import { decodeSync } from "uao-js"
+import uao from "uao-js"
 
 const decode = (data, charset) => {
   let str = ""
@@ -8,7 +8,7 @@ const decode = (data, charset) => {
       str = Buffer.from(data).toString("utf8")
       break
     case "big5":
-      str = decodeSync(String.fromCharCode(...data))
+      str = uao.decodeSync(String.fromCharCode(...data))
       break
     default:
       throw new TypeError(`Unknown charset: ${charset}`)

@@ -1,5 +1,5 @@
 import "dotenv/config"
-import Ptt from "../src/index"
+import { PTT } from "../src/index"
 import { Article } from "../src/sites/ptt/model"
 import WebSocket from "ws"
 
@@ -9,9 +9,8 @@ const TEST_PW = process.env.TEST_PW
 if (!TEST_AC || !TEST_PW) throw new Error("missing info")
 
 global.WebSocket = WebSocket
-
 ;(async function () {
-  const ptt = new Ptt()
+  const ptt = new PTT()
 
   ptt.once("connect", async () => {
     const kickOther = true

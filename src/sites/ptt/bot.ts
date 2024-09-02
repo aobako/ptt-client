@@ -4,7 +4,7 @@ import Terminal from "terminal.js"
 
 import { Line } from "../../common/Line"
 import type { Config } from "../../types/config"
-import Socket from "../../socket"
+import { Socket } from "../../socket"
 import { decode, encode, keymap as key } from "../../utils"
 import { getWidth, indexOfWidth, substrWidth } from "../../utils/char"
 

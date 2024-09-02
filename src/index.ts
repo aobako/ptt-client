@@ -1,3 +1,2 @@
-export { default as default } from "./sites/ptt"
-export { default as ptt } from "./sites/ptt"
-export { default as Socket } from "./socket"
+export { PTT } from "./sites/ptt"
+// export { Socket } from "./socket"

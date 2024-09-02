@@ -1,7 +1,7 @@
 import EventEmitter from "eventemitter3"
 import type { Config } from "./types/config"
 
-class Socket extends EventEmitter {
+export class Socket extends EventEmitter {
   private _config: Config
   private _socket: WebSocket
 
@@ -59,5 +59,3 @@ class Socket extends EventEmitter {
     }
   }
 }
-
-export default Socket
