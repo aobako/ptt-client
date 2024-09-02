@@ -1,15 +1,12 @@
 import EventEmitter from "eventemitter3"
 import sleep from "sleep-promise"
 import Terminal from "terminal.js"
-
 import { Line } from "../../common/Line"
 import type { Config } from "../../types/config"
 import { Socket } from "../../socket"
 import { decode, encode, keymap as key } from "../../utils"
-import { getWidth, indexOfWidth, substrWidth } from "../../utils/char"
-
+import { substrWidth } from "../../utils/char"
 import defaultConfig from "./config"
-import { Article, Board } from "./model"
 
 class Bot extends EventEmitter {
   static initialState = {
@@ -138,14 +135,6 @@ class Bot extends EventEmitter {
     return lines
   }
 
-  /**
-   * @deprecated
-   */
-  async getLines() {
-    const lines = await this.getContent()
-    return lines.map((line) => line.str)
-  }
-
   send(msg: string): Promise<boolean> {
     if (this.config.preventIdleTimeout) {
       this.preventIdle(this.config.preventIdleTimeout)
@@ -259,76 +248,8 @@ class Bot extends EventEmitter {
     }
   }
 
-  /**
-   * @deprecated
-   */
-  private checkArticleWithHeader(): boolean {
-    const authorArea = substrWidth("dbcs", this.line[0].str, 0, 6).trim()
-    return authorArea === "作者"
-  }
-
   select(model) {
     return model.select(this)
-  }
-
-  /**
-   * @deprecated
-   */
-  async getMails(offset: number = 0) {
-    await this.enterMail()
-    if (offset > 0) {
-      offset = Math.max(offset - 9, 1)
-      await this.send(`${key.End}${key.End}${offset}${key.Enter}`)
-    }
-
-    const { getLine } = this
-
-    const mails = []
-    for (let i = 3; i <= 22; i++) {
-      const line = getLine(i).str
-      const mail = {
-        sn: +substrWidth("dbcs", line, 1, 5).trim(),
-        date: substrWidth("dbcs", line, 9, 5).trim(),
-        author: substrWidth("dbcs", line, 15, 12).trim(),
-        status: substrWidth("dbcs", line, 30, 2).trim(),
-        title: substrWidth("dbcs", line, 33).trim()
-      }
-      mails.push(mail)
-    }
-
-    await this.enterIndex()
-    return mails.reverse()
-  }
-
-  /**
-   * @deprecated
-   */
-  async getMail(sn: number) {
-    await this.enterMail()
-    const { getLine } = this
-
-    await this.send(`${sn}${key.Enter}${key.Enter}`)
-
-    const hasHeader = this.checkArticleWithHeader()
-
-    const mail = {
-      sn,
-      author: "",
-      title: "",
-      timestamp: "",
-      lines: []
-    }
-
-    if (this.checkArticleWithHeader()) {
-      mail.author = substrWidth("dbcs", getLine(0).str, 7, 50).trim()
-      mail.title = substrWidth("dbcs", getLine(1).str, 7).trim()
-      mail.timestamp = substrWidth("dbcs", getLine(2).str, 7).trim()
-    }
-
-    mail.lines = await this.getLines()
-
-    await this.enterIndex()
-    return mail
   }
 
   async enterIndex(): Promise<boolean> {
@@ -407,11 +328,6 @@ class Bot extends EventEmitter {
   async enterFavorite(offsets: number[] = []): Promise<boolean> {
     await this.send(`F${key.Enter}`)
     return await this.enterByOffset(offsets)
-  }
-
-  async enterMail(): Promise<boolean> {
-    await this.send(`M${key.Enter}R${key.Enter}${key.Home}${key.End}`)
-    return true
   }
 }
 

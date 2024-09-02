@@ -28,13 +28,6 @@ export class Article {
     return this._content.map((content) => content.str)
   }
 
-  /**
-   * @deprecated
-   */
-  set data(data: ReadonlyArray<string>) {
-    console.warn("Should not set Mail.data/Mail.lines directly. " + "Use Mail.content instead")
-  }
-
   constructor() {}
 
   static fromLine(line: Line): Article {
