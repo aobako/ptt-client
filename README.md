@@ -1,4 +1,5 @@
 # ptt-client
+
 **ptt-client** is an unofficial client to fetch data from PTT ([ptt.cc]), the
 famous BBS in Taiwan, over WebSocket. This module works in browser and Node.js.
 
@@ -8,11 +9,13 @@ PTT supports connection with WebSocket by [official].
 [official]: https://www.ptt.cc/bbs/SYSOP/M.1496571808.A.608.html
 
 ## Installation
+
 ```
 npm install ptt-client
 ```
 
 ## Example
+
 ```js
 import Ptt from 'ptt-client';
 import {Article, Board, Mail} from 'ptt-client/sites/ptt/model';
@@ -29,12 +32,12 @@ global.WebSocket = require('ws');
     const kickOther = true;
     if (!await ptt.login('username', 'password', kickOther))
       return;
-  
+
     // get last 20 articles from specific board. the first one is the latest
     let query = ptt.select(Article).where('boardname', 'C_Chat');
     let article = await query.get();
 
-    // get articles with offset 
+    // get articles with offset
     let offset = articles[article.length-1].id - 1;
     query.where('id', offset);
     let articles2 = await query.get();
@@ -46,7 +49,7 @@ global.WebSocket = require('ws');
       .where('title', '京阿尼')
       .where('push', '20');
     articles = await query.get();
-  
+
     // get the content of specific article
     query.where('id', articles[articles.length-1].id);
     let article = await query.getOne();
@@ -58,7 +61,7 @@ global.WebSocket = require('ws');
     // get hot board list
     query = ptt.select(Board).where('entry', 'hot');
     let hotBoards = await query.get();
-  
+
     // get your favorite list
     query = ptt.select(Board).where('entry', 'favorite');
     let favorites = await query.get();
@@ -66,7 +69,7 @@ global.WebSocket = require('ws');
     // search board by prefix
     query = ptt.select(Board).where('prefix', 'c_cha');
     let boards = await query.get();
-  
+
     // get favorite list in a folder
     if (favorites[0].folder) {
       query.where('offsets', [favorites[0].id]);
@@ -88,10 +91,12 @@ global.WebSocket = require('ws');
 ```
 
 ## Development
+
 ```
 npm run test
 npm run build
 ```
 
 ## License
+
 MIT

@@ -1,19 +1,19 @@
-import { decodeSync } from 'uao-js';
+import { decodeSync } from "uao-js"
 
 const decode = (data, charset) => {
-  let str = '';
+  let str = ""
   switch (charset) {
-    case 'utf8':
-    case 'utf-8':
-      str = Buffer.from(data).toString('utf8');
-      break;
-    case 'big5':
-      str = decodeSync(String.fromCharCode(...data));
-      break;
+    case "utf8":
+    case "utf-8":
+      str = Buffer.from(data).toString("utf8")
+      break
+    case "big5":
+      str = decodeSync(String.fromCharCode(...data))
+      break
     default:
-      throw new TypeError(`Unknown charset: ${charset}`);
+      throw new TypeError(`Unknown charset: ${charset}`)
   }
-  return str;
-};
+  return str
+}
 
-export default decode;
+export default decode

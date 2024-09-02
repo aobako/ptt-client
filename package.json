@@ -6,7 +6,8 @@
   "types": "./dist/index.d.js",
   "scripts": {
     "dev": "tsx ./runner/runner.ts",
-    "build": "tsup ./runner/runner.ts"
+    "build": "tsup ./runner/runner.ts",
+    "format": "prettier . --write"
   },
   "repository": {
     "type": "git",
@@ -24,17 +25,18 @@
   },
   "homepage": "https://github.com/kevinptt0323/ptt-client#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "eventemitter3": "^4.0.0",
     "sleep-promise": "^8.0.1",
     "terminal.js": "github:kevinptt0323/terminal.js",
     "uao-js": "^1.0.1",
     "wcwidth": "^1.0.1",
-    "ws": "^7.1.1",
-    "dotenv": "^16.4.5"
+    "ws": "^7.1.1"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",
     "cross-env": "^5.2.0",
+    "prettier": "3.3.3",
     "tsup": "^8.2.4",
     "tsx": "^4.19.0",
     "typescript": "^5.5.4"

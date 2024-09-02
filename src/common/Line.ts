@@ -1,4 +1,4 @@
 export interface Line {
-  str: string;
-  attr: Object;
-};
+  str: string
+  attr: Object
+}
