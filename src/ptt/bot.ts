@@ -1,14 +1,14 @@
 import EventEmitter from "eventemitter3"
 import sleep from "sleep-promise"
 import Terminal from "terminal.js"
-import { Line } from "../../common/Line"
-import type { Config } from "../../types/config"
-import { Socket } from "../../socket"
-import { decode, encode, keymap as key } from "../../utils"
-import { substrWidth } from "../../utils/char"
-import defaultConfig from "./config"
+import { Line } from "../common/Line"
+import type { Config } from "../types/config"
+import { Socket } from "../socket"
+import { decode, encode, keymap as key } from "../utils"
+import { substrWidth } from "../utils/char"
+import { config as defaultConfig } from "./config"
 
-class Bot extends EventEmitter {
+export class Bot extends EventEmitter {
   static initialState = {
     connect: false,
     login: false

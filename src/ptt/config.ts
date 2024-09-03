@@ -1,6 +1,6 @@
-import type { Config } from "../../types/config"
+import type { Config } from "../types/config"
 
-const config: Config = {
+export const config: Config = {
   name: "PTT",
   url: "wss://ws.ptt.cc/bbs",
   charset: "utf8",
@@ -14,5 +14,3 @@ const config: Config = {
     rows: 24
   }
 }
-
-export default config
