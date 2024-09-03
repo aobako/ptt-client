@@ -5,7 +5,8 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "noEmit": true
+    "noEmit": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"],

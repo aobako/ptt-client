@@ -11,3 +11,9 @@ PTT supports connection with WebSocket by [official].
 ## Installation
 
 WIP
+
+## Local Setup
+
+```sh
+npm pack
+```
