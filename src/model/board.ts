@@ -1,4 +1,4 @@
-import { Line } from "../common/Line"
+import type { Line } from "../types/types"
 import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
 import { keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"

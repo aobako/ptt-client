@@ -1,5 +1,4 @@
-import { Line } from "../common/Line"
-import { ObjectLiteral } from "../common/ObjectLiteral"
+import type { Line, ObjectLiteral } from "../types/types"
 import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
 import { keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
