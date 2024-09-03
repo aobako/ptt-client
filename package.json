@@ -6,7 +6,6 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.js",
   "scripts": {
-    "dev": "tsx ./runner/runner.ts",
     "lint": "tsc",
     "build": "tsup",
     "format": "prettier . --write"
@@ -36,6 +35,7 @@
   },
   "devDependencies": {
     "@types/node": "^12.7.1",
+    "@types/ws": "^8.5.12",
     "prettier": "3.3.3",
     "tsup": "^8.2.4",
     "tsx": "^4.19.0",

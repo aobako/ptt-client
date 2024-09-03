@@ -89,7 +89,9 @@ export class Bot extends EventEmitter {
         this.term.write(msg)
         this.emit("redraw", this.term.toString())
       })
-      .on("error", (err) => {})
+      .on("error", (err) => {
+        console.error("WebSocket connection failed.", err)
+      })
     this.socket = socket
   }
 
