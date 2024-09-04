@@ -2,6 +2,7 @@ import type { Line } from "../types/types"
 import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
 import { keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
+import type { PTT } from ".."
 
 export class Board {
   name = ""
@@ -62,7 +63,7 @@ export class Board {
     return board
   }
 
-  static select(bot): SelectQueryBuilder<Board> {
+  static select(bot: PTT): SelectQueryBuilder<Board> {
     return new BoardSelectQueryBuilder(bot)
   }
 }
@@ -222,5 +223,3 @@ export class BoardSelectQueryBuilder extends SelectQueryBuilder<Board> {
     return boards
   }
 }
-
-export default Board

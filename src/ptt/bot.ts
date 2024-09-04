@@ -1,12 +1,11 @@
 import EventEmitter from "eventemitter3"
 import sleep from "sleep-promise"
 import Terminal from "terminal.js"
-import type { Config } from "../types/config"
-import type { Line } from "../types/types"
-import { Socket } from "../socket"
+import type { Line, Config, Model } from "../types/types"
+import { Socket } from "./socket"
 import { decode, encode, keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
-import { config as defaultConfig } from "./config"
+import { defaultConfig } from "./config"
 
 export class Bot extends EventEmitter {
   static initialState = {
@@ -35,7 +34,7 @@ export class Bot extends EventEmitter {
     return this.line.map((line) => line.str).join("\n")
   }
 
-  constructor(config?: Config) {
+  constructor(config?: Partial<Config>) {
     super()
     this.config = { ...defaultConfig, ...config }
     this.init()
@@ -250,7 +249,7 @@ export class Bot extends EventEmitter {
     }
   }
 
-  select(model) {
+  select<T extends Model>(model: T) {
     return model.select(this)
   }
 

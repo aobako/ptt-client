@@ -1,5 +1,5 @@
 import EventEmitter from "eventemitter3"
-import type { Config } from "./types/config"
+import type { Config } from "../types/types"
 import WebSocket from "ws"
 
 export class Socket extends EventEmitter {
