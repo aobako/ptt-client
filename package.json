@@ -9,7 +9,7 @@
     "lint": "tsc",
     "build": "tsup",
     "format": "prettier . --write",
-    "package-local": "npm pack"
+    "package-local": "tsup && npm pack"
   },
   "repository": {
     "type": "git",
