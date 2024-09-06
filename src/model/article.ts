@@ -11,7 +11,7 @@ export class Article {
   date: string
   timestamp: string
   author: string
-  status: string
+  status: string | "R:" | "□" | "轉"
   title: string
   fixed: boolean
   private _content: Line[] = []

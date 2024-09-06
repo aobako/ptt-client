@@ -6,6 +6,9 @@ import { Socket } from "./socket"
 import { decode, encode, keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
 import { defaultConfig } from "./config"
+import type { Article } from "../model/article"
+import type { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
+import type { Board } from "../model/board"
 
 export class Bot extends EventEmitter {
   static initialState = {
@@ -77,11 +80,7 @@ export class Bot extends EventEmitter {
         this.emit("stateChange", this.state)
       })
       .on("message", (data) => {
-        if (
-          this.currentCharset !== this.config.charset &&
-          !this.state.login &&
-          decode(data, "utf8").includes("登入中，請稍候...")
-        ) {
+        if (this.currentCharset !== this.config.charset && !this.state.login && decode(data, "utf8").includes("登入中，請稍候...")) {
           this.currentCharset = this.config.charset
         }
         const msg = decode(data, this.currentCharset)
@@ -249,8 +248,8 @@ export class Bot extends EventEmitter {
     }
   }
 
-  select<T extends Model>(model: T) {
-    return model.select(this)
+  select<T extends Model>(model: T): T extends typeof Article ? SelectQueryBuilder<Article> : SelectQueryBuilder<Board> {
+    return model.select(this) as any // casting any while we can still infer types within return
   }
 
   async enterIndex(): Promise<boolean> {
