@@ -1,4 +1,4 @@
-import type { Line, ObjectLiteral } from "../types/types"
+import type { ArticleStatus, Line, ObjectLiteral } from "../types/types"
 import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
 import { keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
@@ -11,7 +11,7 @@ export class Article {
   date: string
   timestamp: string
   author: string
-  status: string | "R:" | "□" | "轉"
+  status: ArticleStatus
   title: string
   fixed: boolean
   private _content: Line[] = []
@@ -37,7 +37,7 @@ export class Article {
     article.push = substrWidth("dbcs", str, 9, 2).trim()
     article.date = substrWidth("dbcs", str, 11, 5).trim()
     article.author = substrWidth("dbcs", str, 17, 12).trim()
-    article.status = substrWidth("dbcs", str, 30, 2).trim()
+    article.status = substrWidth("dbcs", str, 30, 2).trim() as ArticleStatus
     article.title = substrWidth("dbcs", str, 32).trim()
     article.fixed = substrWidth("dbcs", str, 1, 7).trim().includes("★")
     return article

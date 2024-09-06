@@ -26,3 +26,5 @@ export type Config = {
 }
 
 export type Model = typeof Article | typeof Board
+
+export type ArticleStatus = "R:" | "□" | "轉"
