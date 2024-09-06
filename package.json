@@ -1,33 +1,33 @@
 {
   "name": "ptt-client",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Node client for fetching data from ptt.cc.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.js",
   "scripts": {
     "lint": "tsc",
     "build": "tsup",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "package-local": "npm pack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevinptt0323/ptt-client.git"
+    "url": "git+https://github.com/irigyano/ptt-client.git"
   },
   "keywords": [
     "bbs",
     "ptt",
     "websocket"
   ],
-  "author": "Kevin Lin",
+  "author": "irigyano",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kevinptt0323/ptt-client/issues"
+    "url": "https://github.com/irigyano/ptt-client/issues"
   },
-  "homepage": "https://github.com/kevinptt0323/ptt-client#readme",
+  "homepage": "https://github.com/irigyano/ptt-client#readme",
   "dependencies": {
     "eventemitter3": "^4.0.0",
-    "sleep-promise": "^8.0.1",
     "terminal.js": "github:kevinptt0323/terminal.js",
     "uao-js": "^1.0.1",
     "wcwidth": "^1.0.1",

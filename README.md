@@ -1,19 +1,30 @@
 # ptt-client
 
-**ptt-client** is an unofficial client to fetch data from PTT ([ptt.cc]), the
-famous BBS in Taiwan, over WebSocket. This module works in browser and Node.js.
+forked version of [ptt-client](https://github.com/kevinptt0323/ptt-client).
 
-PTT supports connection with WebSocket by [official].
+## Notable Changes
 
-[ptt.cc]: https://www.ptt.cc
-[official]: https://www.ptt.cc/bbs/SYSOP/M.1496571808.A.608.html
+- Use `pnpm` over `yarn`
+- Use `tsup` over `babel`
+- Named exports only
+- Upgraded to TypeScript 5
+- Fixed some `any` types
 
 ## Installation
 
-WIP
+TBA
 
-## Local Setup
+## Example
 
-```sh
-npm pack
-```
+TBA
+
+## Credits
+
+Thanks to:
+
+- [@kevinptt0323](https://github.com/kevinptt0323)
+
+## Roadmap
+
+- [ ] Add Tests
+- [ ] Publish to npm

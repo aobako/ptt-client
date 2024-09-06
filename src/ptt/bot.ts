@@ -1,5 +1,4 @@
 import EventEmitter from "eventemitter3"
-import sleep from "sleep-promise"
 import Terminal from "terminal.js"
 import type { Line, Config, Model } from "../types/types"
 import { Socket } from "./socket"
@@ -215,7 +214,7 @@ export class Bot extends EventEmitter {
     } else {
       let state = 0
       while (true) {
-        await sleep(400)
+        await new Promise((res) => setTimeout(res, 400))
         const lines = this.line
         if (lines[22].str.includes("登入中，請稍候...")) {
           /* no-op */
