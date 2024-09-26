@@ -261,6 +261,9 @@ export class Bot extends EventEmitter {
     const match = boardRe.exec(this.line[0].str)
     if (match) {
       return match.groups.boardname
+      // wtf is wrong with LoL board??
+    } else if (this.line[0].str.includes("LoL")) {
+      return "LoL"
     } else {
       return void 0
     }
