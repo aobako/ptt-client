@@ -1,4 +1,4 @@
-import type { ArticleStatus, Line, ObjectLiteral } from "../types/types"
+import type { ArticleStatus, Line } from "../types/types"
 import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
 import { keymap as key } from "../utils"
 import { substrWidth } from "../utils/char"
@@ -67,7 +67,7 @@ export enum WhereType {
 export class ArticleSelectQueryBuilder extends SelectQueryBuilder<Article> {
   private bot
   private boardname = ""
-  private wheres: ObjectLiteral[] = []
+  private wheres: Record<string, any>[] = []
   private id = 0
 
   constructor(bot) {

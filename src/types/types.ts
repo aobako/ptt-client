@@ -5,10 +5,6 @@ export type Line = {
   attr: object
 }
 
-export type ObjectLiteral = {
-  [key: string]: any
-}
-
 export type Config = {
   name: string
   url: string
