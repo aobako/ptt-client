@@ -10,7 +10,8 @@
     "lint": "tsc",
     "build": "tsup",
     "format": "prettier . --write",
-    "package-local": "tsup && npm pack"
+    "package-local": "tsup && npm pack",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
