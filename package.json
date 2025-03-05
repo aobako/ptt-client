@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/irigyano/ptt-client.git"
+    "url": "git+https://github.com/aobako/ptt-client.git"
   },
   "keywords": [
     "bbs",
     "ptt",
     "websocket"
   ],
-  "author": "irigyano",
+  "author": "aobako",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/irigyano/ptt-client/issues"
+    "url": "https://github.com/aobako/ptt-client/issues"
   },
-  "homepage": "https://github.com/irigyano/ptt-client#readme",
+  "homepage": "https://github.com/aobako/ptt-client#readme",
   "dependencies": {
     "eventemitter3": "^4.0.0",
     "terminal.js": "github:kevinptt0323/terminal.js",
