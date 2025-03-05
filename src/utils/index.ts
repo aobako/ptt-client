@@ -1,4 +1,4 @@
-export * as char from "./char"
-export { default as decode } from "./decode"
-export { default as encode } from "./encode"
-export { default as keymap } from "./keymap"
+export * as char from "./char.js"
+export { default as decode } from "./decode.js"
+export { default as encode } from "./encode.js"
+export { default as keymap } from "./keymap.js"

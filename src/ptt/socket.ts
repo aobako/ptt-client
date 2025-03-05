@@ -1,12 +1,12 @@
 import EventEmitter from "eventemitter3"
-import type { Config } from "../types/types"
+import type { Config } from "../types/types.js"
 import WebSocket from "ws"
 
 export class Socket extends EventEmitter {
   private _config: Config
-  private _socket: WebSocket
+  private _socket?: WebSocket
 
-  constructor(config) {
+  constructor(config: Config) {
     super()
     this._config = config
   }
@@ -28,10 +28,11 @@ export class Socket extends EventEmitter {
     socket.addEventListener("close", this.emit.bind(this, "disconnect"))
     socket.addEventListener("error", this.emit.bind(this, "error"))
 
-    let data = []
-    let timeoutHandler
+    let data: number[] = []
+    let timeoutHandler: NodeJS.Timeout
     socket.binaryType = "arraybuffer"
-    socket.addEventListener("message", ({ data: currData }) => {
+    socket.addEventListener("message", (event) => {
+      const currData = event.data as ArrayBuffer
       clearTimeout(timeoutHandler)
       data.push(...new Uint8Array(currData))
       timeoutHandler = setTimeout(() => {
@@ -39,9 +40,7 @@ export class Socket extends EventEmitter {
         data = []
       }, this._config.timeout)
       if (currData.byteLength > this._config.blobSize) {
-        throw new Error(
-          `Receive message length(${currData.byteLength}) greater than buffer size(${this._config.blobSize})`
-        )
+        throw new Error(`Receive message length(${currData.byteLength}) greater than buffer size(${this._config.blobSize})`)
       }
     })
 
@@ -50,12 +49,12 @@ export class Socket extends EventEmitter {
 
   disconnect(): void {
     const socket = this._socket
-    socket.close()
+    socket?.close()
   }
 
-  send(str: string): void {
+  send(str: ArrayBufferLike): void {
     const socket = this._socket
-    if (socket.readyState === 1 /* OPEN */) {
+    if (socket?.readyState === 1 /* OPEN */) {
       socket.send(str)
     }
   }

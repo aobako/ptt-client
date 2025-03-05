@@ -1,9 +1,4 @@
-import { QueryBuilder } from "./QueryBuilder"
-export abstract class SelectQueryBuilder<T> extends QueryBuilder<T> {
-  constructor(...args) {
-    super(...args)
-  }
-
+export abstract class SelectQueryBuilder<T> {
   abstract where(type: string, condition: any): this
 
   abstract get(): Promise<T[]>

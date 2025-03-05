@@ -1,3 +1,4 @@
+// @ts-ignore lib types TBA
 import wcwidth from "wcwidth"
 
 export function dbcswidth(str: string): number {
@@ -64,9 +65,7 @@ export function substrWidth(widthType: string, str: string, startWidth: number, 
     }
     if (!ignoreWidth) {
       length = indexOfWidth(widthType, str.substr(start), width - prefixSpace)
-      suffixSpace =
-        Math.min(width, getWidth(widthType, str.substr(start))) -
-        (prefixSpace + getWidth(widthType, str.substr(start, length)))
+      suffixSpace = Math.min(width, getWidth(widthType, str.substr(start))) - (prefixSpace + getWidth(widthType, str.substr(start, length)))
     }
   }
   const substr = ignoreWidth ? str.substr(start) : str.substr(start, length)

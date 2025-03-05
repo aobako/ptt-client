@@ -1,6 +1,7 @@
+// @ts-ignore lib types TBA
 import uao from "uao-js"
 
-const encode = (str, charset) => {
+const encode = (str: string, charset: string) => {
   let buffer
   switch (charset) {
     case "utf8":

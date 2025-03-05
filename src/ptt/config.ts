@@ -1,4 +1,4 @@
-import type { Config } from "../types/types"
+import type { Config } from "../types/types.js"
 
 export const defaultConfig: Config = {
   name: "PTT",

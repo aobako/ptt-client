@@ -1,6 +1,7 @@
+// @ts-ignore lib types TBA
 import uao from "uao-js"
 
-const decode = (data, charset) => {
+const decode = (data: number[], charset: string) => {
   let str = ""
   switch (charset) {
     case "utf8":

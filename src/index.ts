@@ -1,3 +1,3 @@
-export { Bot as PTT } from "./ptt/bot"
-export { Article } from "./model/article"
-export { Board } from "./model/board"
+export { Bot as PTT } from "./ptt/bot.js"
+export { Article } from "./model/article.js"
+export { Board } from "./model/board.js"
