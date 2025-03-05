@@ -1,5 +1,6 @@
 {
   "name": "ptt-client",
+  "packageManager": "pnpm@10.5.2",
   "type": "module",
   "version": "0.1.0",
   "description": "A Node client for fetching data from ptt.cc.",
