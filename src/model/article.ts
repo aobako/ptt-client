@@ -1,20 +1,24 @@
-import type { ArticleStatus, Line } from "../types/types"
-import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
-import { keymap as key } from "../utils"
-import { substrWidth } from "../utils/char"
-import type { PTT } from ".."
+import type { ArticleStatus, Line } from "../types/types.js"
+import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder.js"
+import { keymap as key } from "../utils/index.js"
+import { substrWidth } from "../utils/char.js"
+import type { PTT } from "../index.js"
 
 export class Article {
-  boardname: string
+  boardname?: string
   id: number
-  push: string
-  date: string
-  timestamp: string
-  author: string
-  status: ArticleStatus
-  title: string
-  fixed: boolean
+  push?: string
+  date?: string
+  timestamp?: string
+  author?: string
+  status?: ArticleStatus
+  title?: string
+  fixed?: boolean
   private _content: Line[] = []
+
+  constructor(id: number) {
+    this.id = id
+  }
 
   get content(): ReadonlyArray<Line> {
     return this._content
@@ -28,12 +32,10 @@ export class Article {
     return this._content.map((content) => content.str)
   }
 
-  constructor() {}
-
   static fromLine(line: Line): Article {
-    const article = new Article()
     const { str } = line
-    article.id = +substrWidth("dbcs", str, 1, 7).trim()
+    const id = +substrWidth("dbcs", str, 1, 7).trim()
+    const article = new Article(id)
     article.push = substrWidth("dbcs", str, 9, 2).trim()
     article.date = substrWidth("dbcs", str, 11, 5).trim()
     article.author = substrWidth("dbcs", str, 17, 12).trim()
@@ -65,12 +67,12 @@ export enum WhereType {
 }
 
 export class ArticleSelectQueryBuilder extends SelectQueryBuilder<Article> {
-  private bot
+  private bot: PTT
   private boardname = ""
   private wheres: Record<string, any>[] = []
   private id = 0
 
-  constructor(bot) {
+  constructor(bot: PTT) {
     super()
     this.bot = bot
   }
@@ -112,6 +114,7 @@ export class ArticleSelectQueryBuilder extends SelectQueryBuilder<Article> {
     if (!found) {
       return []
     }
+
     if (this.id > 0) {
       const id = Math.max(this.id - 9, 1)
       await this.bot.send(`${key.End}${key.End}${id}${key.Enter}`)
@@ -127,6 +130,7 @@ export class ArticleSelectQueryBuilder extends SelectQueryBuilder<Article> {
       article.boardname = this.boardname
       articles.push(article)
     }
+
     // fix id
     if (articles.length >= 2 && articles[0].id === 0) {
       for (let i = 1; i < articles.length; i++) {
@@ -153,8 +157,7 @@ export class ArticleSelectQueryBuilder extends SelectQueryBuilder<Article> {
     /* TODO: validate id */
     await this.bot.send(`${this.id}${key.Enter}${key.Enter}`)
 
-    const article = new Article()
-    article.id = this.id
+    const article = new Article(this.id)
     article.boardname = this.boardname
     article.content = await this.bot.getContent()
 

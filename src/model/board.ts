@@ -1,8 +1,8 @@
-import type { Line } from "../types/types"
-import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
-import { keymap as key } from "../utils"
-import { substrWidth } from "../utils/char"
-import type { PTT } from ".."
+import type { Line } from "../types/types.js"
+import { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder.js"
+import { keymap as key } from "../utils/index.js"
+import { substrWidth } from "../utils/char.js"
+import type { PTT } from "../index.js"
 
 export class Board {
   name = ""
@@ -82,12 +82,12 @@ export enum Entry {
 }
 
 export class BoardSelectQueryBuilder extends SelectQueryBuilder<Board> {
-  private bot
+  private bot: PTT
   private entry: Entry = Entry.Class
   private prefix: string = ""
   private offsets: number[] = []
 
-  constructor(bot) {
+  constructor(bot: PTT) {
     super()
     this.bot = bot
   }

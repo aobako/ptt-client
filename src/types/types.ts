@@ -1,4 +1,4 @@
-import type { Article, Board } from "../index"
+import type { Article, Board } from "../index.js"
 
 export type Line = {
   str: string
@@ -19,6 +19,14 @@ export type Config = {
     rows: number
   }
   [key: string]: any
+}
+
+export type BotState = {
+  connect: boolean
+  login: boolean
+  position: {
+    boardname?: string
+  }
 }
 
 export type Model = typeof Article | typeof Board

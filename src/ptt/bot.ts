@@ -1,27 +1,29 @@
 import EventEmitter from "eventemitter3"
+// @ts-ignore: lib types TBA
 import Terminal from "terminal.js"
-import type { Line, Config, Model } from "../types/types"
-import { Socket } from "./socket"
-import { decode, encode, keymap as key } from "../utils"
-import { substrWidth } from "../utils/char"
-import { defaultConfig } from "./config"
-import type { Article } from "../model/article"
-import type { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder"
-import type { Board } from "../model/board"
+import type { Line, Config, Model, BotState } from "../types/types.js"
+import { Socket } from "./socket.js"
+import { decode, encode, keymap as key } from "../utils/index.js"
+import { substrWidth } from "../utils/char.js"
+import { defaultConfig } from "./config.js"
+import type { Article } from "../model/article.js"
+import type { SelectQueryBuilder } from "../utils/query-builder/SelectQueryBuilder.js"
+import type { Board } from "../model/board.js"
 
 export class Bot extends EventEmitter {
-  static initialState = {
+  static initialState: BotState = {
     connect: false,
-    login: false
+    login: false,
+    position: {}
   }
   static forwardEvents = ["message", "error"]
 
-  private config: Config
+  private _config: Config
   private term: Terminal
-  private _state: any
+  private _state: BotState
   private currentCharset: string
   private socket: Socket
-  private preventIdleHandler: ReturnType<typeof setTimeout>
+  private preventIdleHandler?: ReturnType<typeof setTimeout>
 
   get line(): Line[] {
     const lines = []
@@ -38,18 +40,13 @@ export class Bot extends EventEmitter {
 
   constructor(config?: Partial<Config>) {
     super()
-    this.config = { ...defaultConfig, ...config }
-    this.init()
-  }
-
-  async init(): Promise<void> {
-    const { config } = this
-    this.term = new Terminal(config.terminal)
+    this._config = { ...defaultConfig, ...config }
+    this.term = new Terminal(this._config.terminal)
     this._state = { ...Bot.initialState }
     this.term.state.setMode("stringWidth", "dbcs")
     this.currentCharset = "big5"
 
-    switch (config.protocol.toLowerCase()) {
+    switch (this._config.protocol.toLowerCase()) {
       case "websocket":
       case "ws":
       case "wss":
@@ -57,11 +54,10 @@ export class Bot extends EventEmitter {
       case "telnet":
       case "ssh":
       default:
-        throw new Error(`Invalid protocol: ${config.protocol}`)
-        break
+        throw new Error(`Invalid protocol: ${this._config.protocol}`)
     }
 
-    const socket = new Socket(config)
+    const socket = new Socket(this._config)
     socket.connect()
 
     Bot.forwardEvents.forEach((e) => {
@@ -79,8 +75,8 @@ export class Bot extends EventEmitter {
         this.emit("stateChange", this.state)
       })
       .on("message", (data) => {
-        if (this.currentCharset !== this.config.charset && !this.state.login && decode(data, "utf8").includes("登入中，請稍候...")) {
-          this.currentCharset = this.config.charset
+        if (this.currentCharset !== this._config.charset && !this.state.login && decode(data, "utf8").includes("登入中，請稍候...")) {
+          this.currentCharset = this._config.charset
         }
         const msg = decode(data, this.currentCharset)
         this.term.write(msg)
@@ -96,12 +92,12 @@ export class Bot extends EventEmitter {
     return { ...this._state }
   }
 
-  getLine = (n) => {
+  getLine = (n: number) => {
     return this.term.state.getLine(n)
   }
 
   async getContent(): Promise<Line[]> {
-    const lines = []
+    const lines: Line[] = []
 
     lines.push(this.line[0])
 
@@ -135,12 +131,12 @@ export class Bot extends EventEmitter {
   }
 
   send(msg: string): Promise<boolean> {
-    if (this.config.preventIdleTimeout) {
-      this.preventIdle(this.config.preventIdleTimeout)
+    if (this._config.preventIdleTimeout) {
+      this.preventIdle(this._config.preventIdleTimeout)
     }
     return new Promise((resolve, reject) => {
-      let autoResolveHandler
-      const cb = (message) => {
+      let autoResolveHandler: NodeJS.Timeout
+      const cb = () => {
         clearTimeout(autoResolveHandler)
         resolve(true)
       }
@@ -151,9 +147,8 @@ export class Bot extends EventEmitter {
           autoResolveHandler = setTimeout(() => {
             this.removeListener("message", cb)
             resolve(false)
-          }, this.config.timeout * 10)
+          }, this._config.timeout * 10)
         } else {
-          console.info(`Sending message with 0-length. Skipped.`)
           resolve(true)
         }
       } else {
@@ -172,12 +167,12 @@ export class Bot extends EventEmitter {
     }
   }
 
-  async login(username: string, password: string, kick: boolean = true): Promise<any> {
+  async login(username: string, password: string, kick: boolean = true): Promise<boolean> {
     if (this.state.login) {
-      return
+      return true
     }
     username = username.replace(/,/g, "")
-    if (this.config.charset === "utf8") {
+    if (this._config.charset === "utf8") {
       username += ","
     }
     await this.send(`${username}${key.Enter}${password}${key.Enter}`)
@@ -195,7 +190,7 @@ export class Bot extends EventEmitter {
 
   async logout(): Promise<boolean> {
     if (!this.state.login) {
-      return
+      return true
     }
     await this.send(`G${key.Enter}Y${key.Enter}`)
     this._state.login = false
@@ -256,16 +251,16 @@ export class Bot extends EventEmitter {
     return true
   }
 
-  get currentBoardname(): string | undefined {
+  get currentBoardname(): string {
     const boardRe = /【(?!看板列表).*】.*《(?<boardname>.*)》/
     const match = boardRe.exec(this.line[0].str)
-    if (match) {
-      return match.groups.boardname
+    if (match?.groups) {
+      return match.groups.boardname!
       // wtf is wrong with LoL board??
     } else if (this.line[0].str.includes("LoL")) {
       return "LoL"
     } else {
-      return void 0
+      return ""
     }
   }
 
